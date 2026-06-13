@@ -83,3 +83,11 @@ When the agent needs to recall something, it runs `search.sh` with the query and
 ## License
 
 MIT
+
+## Install from ClawHub
+
+```bash
+openclaw skills install meili-memory
+```
+
+Or browse at [clawhub.ai/enjuguna/meili-memory](https://clawhub.ai/enjuguna/meili-memory)
