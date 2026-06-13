@@ -1,3 +1,8 @@
+---
+name: meili-memory
+description: Local full-text search for OpenClaw memory recall using MeiliSearch. No API keys, no cloud services — runs entirely on your server.
+---
+
 # MeiliSearch Memory
 
 Local full-text search for memory recall. No API keys, no cloud services — runs entirely on your server.
