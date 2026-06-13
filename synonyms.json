@@ -1,0 +1,11 @@
+{
+  "debts": ["debts", "liabilities", "rent", "KES", "money I owe", "loan", "HELB", "NCBA", "MPESA", "bank", "shop", "friends"],
+  "projects": ["projects", "Molthub", "Molthub-Daily-Devotion", "budget", "budget_bot", "intelligent-budget-tracker", "bursary", "membership", "daily-devotion", "skill", "repo", "repository"],
+  "identity": ["Eric", "Njuguna", "enjuguna", "who am I", "about me", "profile"],
+  "finance": ["finance", "money", "budget", "expense", "income", "savings", "debt", "KES", "net worth", "assets", "liabilities"],
+  "work": ["work", "job", "career", "employment", "internship", "GitHub", "coding", "development", "TypeScript", "npm"],
+  "auth": ["auth", "login", "token", "API key", "credential", "password", "gog", "Google", "GitHub"],
+  "schedule": ["schedule", "cron", "daily", "weekly", "morning briefing", "devotion", "Sunday ideation", "reminder"],
+  "skills": ["skill", "weather", "github", "gog", "daily-devotion", "intelligent-budget-tracker", "meili-memory", "plugin"],
+  "server": ["server", "OpenClaw", "gateway", "MeiliSearch", "systemd", "Linux", "hosting"]
+}

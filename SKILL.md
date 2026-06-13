@@ -7,48 +7,59 @@ description: Local full-text search for OpenClaw memory recall using MeiliSearch
 
 Local full-text search for memory recall. No API keys, no cloud services — runs entirely on your server.
 
-## How it works
+## Architecture
 
-- **MeiliSearch** runs as a systemd service on `127.0.0.1:7700`
-- Memory documents are stored in the `memories` index
-- Documents are chunked from `MEMORY.md` (by section) and daily notes (by 1500 chars)
-- The indexer runs automatically via cron and on-demand
+Three-tier indexing system that mimics human memory:
 
-## Searching memory
+- **Core** — MEMORY.md sections (highest importance, always current)
+- **Working** — Daily notes from the last 7 days (recent context)
+- **Archive** — Older daily notes (lower priority)
 
-Use the `scripts/search.sh` script to query the index:
+Search queries hit all tiers in order: core → working → archive. Results are ranked by tier priority and importance score.
 
-```bash
-bash scripts/search.sh "your query here" [limit]
-```
+## Features
 
-Returns JSON with matching documents ranked by relevance.
+- **Synonym expansion** — "debts" also matches "liabilities", "rent", "KES", etc.
+- **Relationship tags** — Each chunk is auto-tagged (#finance/debts, #project/molthub, #identity, etc.)
+- **Tiered search** — Query core only for fast answers, or all tiers for deep recall
+- **Auto-distillation** — Weekly cron extracts key facts from daily notes into MEMORY.md
+- **Typo tolerance** — Built-in fuzzy matching via MeiliSearch
 
-## Indexing / re-indexing
-
-Run the indexer to sync all Markdown files to MeiliSearch:
-
-```bash
-bash scripts/indexer.sh
-```
-
-This:
-1. Reads `MEMORY.md` and splits by `##` sections
-2. Reads all `memory/*.md` daily notes and chunks them
-3. Pushes to MeiliSearch in batches
-
-## crontab
-
-The indexer runs every hour via cron to pick up new daily notes:
-
-```
-0 * * * * cd /root/.openclaw/workspace/skills/meili-memory && bash scripts/indexer.sh >> /tmp/meili-indexer.log 2>&1
-```
-
-## Service management
+## Search
 
 ```bash
-systemctl status meilisearch    # Check status
-systemctl restart meilisearch   # Restart
-journalctl -u meilisearch -f   # View logs
+bash scripts/search.sh "your query" [limit] [tier]
+```
+
+Examples:
+```bash
+bash scripts/search.sh "debts"           # Search all tiers, top 5
+bash scripts/search.sh "projects" 3      # Top 3 from all tiers
+bash scripts/search.sh "Eric" 5 core     # Core only (fast)
+```
+
+## Indexing
+
+```bash
+bash scripts/indexer.sh          # Incremental update
+bash scripts/indexer.sh --full   # Full reindex (wipes and rebuilds)
+```
+
+## Distillation
+
+```bash
+bash scripts/distill.sh          # Extract facts → MEMORY.md
+bash scripts/distill.sh --dry-run # Preview what would be added
+```
+
+## Cron Jobs
+
+- **Hourly** — Re-index new daily notes
+- **Weekly (Sunday 2 AM)** — Distill facts into MEMORY.md
+
+## Service
+
+```bash
+systemctl status meilisearch
+journalctl -u meilisearch -f
 ```

@@ -91,3 +91,11 @@ openclaw skills install meili-memory
 ```
 
 Or browse at [clawhub.ai/enjuguna/meili-memory](https://clawhub.ai/enjuguna/meili-memory)
+
+## v2.0 Improvements
+
+- **Tiered indexing** — Core (MEMORY.md), Working (last 7 days), Archive (older)
+- **Synonym expansion** — "debts" also finds "liabilities", "rent", "KES"
+- **Relationship tags** — Auto-tagged chunks (#finance/debts, #project/molthub, etc.)
+- **Memory distillation** — Weekly cron extracts key facts from daily notes into MEMORY.md
+- **Importance scoring** — Core memories rank higher than old daily notes
